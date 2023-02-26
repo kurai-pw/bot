@@ -60,5 +60,11 @@ class Verification(commands.Cog):
                 role = guild.get_role(int(VERIFIED_ROLE_ID))
                 await user.add_roles(role)
 
+                await ctx.author.send(embed=discord.Embed(
+                    title='Enjoy!',
+                    description='Welcome to **kurai.pw** Discord server!',
+                    color=0xb873be,
+                ))
+
 async def setup(bot):
     await bot.add_cog(Verification(bot))

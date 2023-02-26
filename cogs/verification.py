@@ -51,7 +51,16 @@ class Verification(commands.Cog):
     async def letme(self, ctx: commands.Context):
         r = StrictRedis()
         for key in r.scan_iter("verification:*"):
-            if Redis.get(f'verification:{key}') == ctx.author.id:
+            if int(Redis.get(key.decode("utf-8")).decode("utf-8")) == ctx.author.id:
+                data = Database.execute_query(
+                    "SELECT discord_id "
+                    "FROM users "
+                    f"WHERE discord_id = {ctx.author.id}",
+                    res=True
+                )
+                if not data or (data[0]['discord_id'] != ctx.author.id):
+                    return await ctx.author.send('You\'re not yet verified, please follow instructions.')
+
                 r.delete(key)
 
                 # Add role 'Member' to User.

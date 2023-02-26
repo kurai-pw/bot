@@ -46,10 +46,6 @@ class Verification(commands.Cog):
             description=code,
             color=0xb873be,
         ))
-        # return await ctx.author.send(f'Verification code  -  `{code}`')
-
-
-
 
     @commands.command()
     async def letme(self, ctx: commands.Context):
@@ -58,9 +54,10 @@ class Verification(commands.Cog):
             if Redis.get(f'verification:{key}') == ctx.author.id:
                 r.delete(key)
 
-                guild = self.bot.get_guild(GUILD_ID)
-                user = guild.get_member(ctx.author.id)
-                role = guild.get_role(VERIFIED_ROLE_ID)
+                # Add role 'Member' to User.
+                guild = await self.bot.fetch_guild(GUILD_ID)
+                user = await guild.fetch_member(ctx.author.id)
+                role = guild.get_role(int(VERIFIED_ROLE_ID))
                 await user.add_roles(role)
 
 async def setup(bot):

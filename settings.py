@@ -6,6 +6,7 @@ env = Config('.env')
 # List of cogs.
 MODULES = (
     'verification',
+    'events'
 )
 
 DATABASE_CREDENTIALS = {
@@ -17,6 +18,7 @@ DATABASE_CREDENTIALS = {
 
 GUILD_ID = env('GUILD_ID')
 VERIFIED_ROLE_ID = env('VERIFIED_ROLE_ID')
+RESTRICTED_ROLE_ID = env('RESTRICTED_ROLE_ID')
 
 # Pattern of verification code.
 CODE_PATTERN = ''.join([ascii_lowercase, ascii_uppercase])

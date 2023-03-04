@@ -12,21 +12,6 @@ class Verification(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.Cog.listener()
-    async def on_ready(self):
-        await self.bot.change_presence(
-            status=discord.Status.dnd,
-            activity=discord.Activity(
-                type=discord.ActivityType.playing,
-                name='osu!'
-            )
-        )
-
-    @commands.Cog.listener()
-    async def on_member_join(self, member):
-        # @TODO Add check if user are verified and or restricted.
-        pass
-
     @commands.command()
     async def code(self, ctx: commands.Context):
         data = Database.execute_query(
@@ -38,12 +23,16 @@ class Verification(commands.Cog):
         if data != ():
             return await ctx.author.send('You\'re already verified.')
 
-        code = ''.join([choice(CODE_PATTERN) for _ in range(8)])
-        Redis.set(f'verification:{code}', ctx.author.id)
+        while True:
+            code = ''.join([choice(CODE_PATTERN) for _ in range(8)])
+
+            if Redis.get(f'verification:{code}') is None:
+                Redis.set(f'verification:{code}', ctx.author.id)
+                break
 
         return await ctx.author.send(embed=discord.Embed(
             title='Verification code',
-            description=code,
+            description=f'Send `!verify {code}` to `kurai.bot`.',
             color=0xb873be,
         ))
 

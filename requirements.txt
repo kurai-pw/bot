@@ -1,5 +1,5 @@
 discord==2.1.0
-starlette==0.17.1
+starlette==0.25.0
 pymysql==1.0.2
-SQLAlchemy==1.4.29
+sqlalchemy==1.4.46
 redis==4.5.1

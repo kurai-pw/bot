@@ -5,8 +5,9 @@ env = Config('.env')
 
 # List of cogs.
 MODULES = (
+    'events',
     'verification',
-    'events'
+    'score_post',
 )
 
 DATABASE_CREDENTIALS = {
@@ -16,7 +17,13 @@ DATABASE_CREDENTIALS = {
     'database': env('DATABASE_NAME'),
 }
 
+OSU_DOMAIN = env('OSU_DOMAIN')
+
+# Discord data.
 GUILD_ID = env('GUILD_ID')
+
+SCOREPOST_CHANNEL_ID = env('SCOREPOST_CHANNEL_ID')
+
 VERIFIED_ROLE_ID = env('VERIFIED_ROLE_ID')
 RESTRICTED_ROLE_ID = env('RESTRICTED_ROLE_ID')
 

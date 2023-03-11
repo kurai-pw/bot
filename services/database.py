@@ -30,4 +30,4 @@ class Database:
                 cursor.execute(query)
 
                 if res:
-                        return cursor.fetchall()
+                    return cursor.fetchall()

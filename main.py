@@ -1,8 +1,10 @@
-import discord
 import asyncio
 
+from nextcord import Intents
+from nextcord.ext import commands
+
 from starlette.config import Config
-from discord.ext import commands
+
 from settings import MODULES
 
 env = Config('.env')
@@ -11,15 +13,14 @@ env = Config('.env')
 async def main():
     bot = commands.Bot(
         command_prefix=commands.when_mentioned_or(env('PREFIX')),
-        intents=discord.Intents.all(),
+        intents=Intents.all(),
         help_command=None
     )
 
-    async with bot:
-        for module in MODULES:
-            await bot.load_extension('cogs.' + module)
+    for module in MODULES:
+        bot.load_extension('cogs.' + module)
 
-        await bot.start(env('TOKEN'))
+    await bot.start(env('TOKEN'))
 
 
 if __name__ == '__main__':

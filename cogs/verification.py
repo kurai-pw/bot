@@ -1,11 +1,14 @@
-import discord
+import nextcord
 
-from discord.ext import commands
+from nextcord.ext import commands
+
 from redis import StrictRedis
-from settings import CODE_PATTERN, GUILD_ID, VERIFIED_ROLE_ID
 from random import choice
+
 from services.database import Database
 from services.redis_database import Redis
+
+from settings import CODE_PATTERN, GUILD_ID, VERIFIED_ROLE_ID
 
 
 class Verification(commands.Cog):
@@ -30,7 +33,7 @@ class Verification(commands.Cog):
                 Redis.set(f'verification:{code}', ctx.author.id)
                 break
 
-        return await ctx.author.send(embed=discord.Embed(
+        return await ctx.author.send(embed=nextcord.Embed(
             title='Verification code',
             description=f'Send `!verify {code}` to `kurai.bot`.',
             color=0xb873be,
@@ -58,11 +61,15 @@ class Verification(commands.Cog):
                 role = guild.get_role(int(VERIFIED_ROLE_ID))
                 await user.add_roles(role)
 
-                await ctx.author.send(embed=discord.Embed(
+                return await ctx.author.send(embed=nextcord.Embed(
                     title='Enjoy!',
                     description='Welcome to **kurai.pw** Discord server!',
                     color=0xb873be,
                 ))
+        await ctx.author.send(embed=nextcord.Embed(
+            description='Could not find data about completed verification process or you\'re already verified.',
+            color=0xb873be,
+        ))
 
-async def setup(bot):
-    await bot.add_cog(Verification(bot))
+def setup(bot) -> None:
+    bot.add_cog(Verification(bot))

@@ -25,15 +25,16 @@ class ScorePost(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.Cog.listener()
-    async def on_ready(self) -> None:
+    @commands.command()
+    @commands.is_owner()
+    async def scorepost_sync(self, ctx: commands.Context) -> None:
         """
         Sync slash commands.
         """
         self.bot.add_all_application_commands()
         await self.bot.sync_application_commands(guild_id=GUILD_ID)
 
-        print('Loaded cogs/score_post and sync. slash commands.')
+        await ctx.send('`ScorePost` synced.')
 
     @slash_command(name='rs', guild_ids=[GUILD_ID])
     async def recent_score(

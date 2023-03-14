@@ -11,6 +11,12 @@ class Events(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
+        """
+        Sync slash commands and change presence.
+        """
+        self.bot.add_all_application_commands()
+        await self.bot.sync_application_commands(guild_id=GUILD_ID)
+
         await self.bot.change_presence(
             status=nextcord.Status.online,
             activity=nextcord.Activity(

@@ -75,10 +75,10 @@ class ScorePost(commands.Cog):
         request_url = f'https://api.{OSU_DOMAIN}/v1/get_player_scores?id={player_id}&scope=recent&limit=1'
         if mode:
             request_url += f'&mode={converted_mode}'
-        data = get(request_url)
+        data = get(request_url, verify=False)
 
         if data.status_code != 200:
-            if get(f'https://api.{OSU_DOMAIN}/v1/get_player_count').status_code != 200:
+            if get(f'https://api.{OSU_DOMAIN}/v1/get_player_count', verify=False).status_code != 200:
                 return await interaction.response.send_message('Get critical error, seems like osu! server is down.')
             return await interaction.response.send_message('Couldn\'t find any score.')
 
@@ -90,7 +90,7 @@ class ScorePost(commands.Cog):
 
         # Loads beatmap pp's for different acc's if score isn't SS.
         if not score['perfect']:
-            request_pp_data = get(f'https://api.{OSU_DOMAIN}/v1/get_score_pp_range?sid={score["id"]}')
+            request_pp_data = get(f'https://api.{OSU_DOMAIN}/v1/get_score_pp_range?sid={score["id"]}', verify=False)
 
             if request_pp_data.status_code == 200:
                 if (data := loads(request_pp_data.text))['status'] == 'success':
@@ -123,7 +123,7 @@ class ScorePost(commands.Cog):
                 inline=False,
             )
 
-        map_top_data = get(f'https://api.{OSU_DOMAIN}/v1/get_map_scores?scope=best&id={beatmap["id"]}')
+        map_top_data = get(f'https://api.{OSU_DOMAIN}/v1/get_map_scores?scope=best&id={beatmap["id"]}', verify=False)
         if map_top_data.status_code == 200:
             map_top = loads(map_top_data.text)
             if map_top['status'] == 'success':

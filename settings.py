@@ -6,6 +6,7 @@ env = Config('.env')
 # List of cogs.
 MODULES = (
     'events',
+    'staff',
     'verification',
     'score_post',
 )

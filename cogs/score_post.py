@@ -97,7 +97,12 @@ class ScorePost(commands.Cog):
 
         score = score_data['scores'][0]
         beatmap = score['beatmap']
-        mods = Mods(score['mods']).human_readable()
+
+        # @TODO Ah, will fix that later.
+        try:
+            mods = Mods(score['mods']).human_readable()
+        except:
+            mods = ''
 
         # Loads beatmap pp's for different acc's if score isn't SS.
         if not score['perfect']:

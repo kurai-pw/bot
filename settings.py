@@ -62,7 +62,7 @@ AVAILABLE_MODS = [
 
 # Guild with those emojis - https://discord.gg/cAzFTTbEQW
 GRADE_EMOJI = {
-    'SSH': '<:SSH:1084256202130722866>',
+    'X': '<:SSH:1084256202130722866>',
     'SS': '<:SS:1084256199542849596>',
     'SH': '<:SH:1084256197756068001>',
     'S': '<:S_:1084256196900421732>',
